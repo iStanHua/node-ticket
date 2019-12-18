@@ -107,11 +107,9 @@ export default class Question {
       ])
         .then((answer: any) => {
           resolve({
-            'leftTicketDTO.train_date': answer.train_date,
-            'leftTicketDTO.from_station':
-              startStations.origin[answer.from_station].code,
-            'leftTicketDTO.to_station':
-              endStations.origin[answer.to_station].code,
+            train_date: answer.train_date,
+            from_station: startStations.origin[answer.from_station].code,
+            to_station: endStations.origin[answer.to_station].code,
             purpose_codes: answer.purpose_codes ? '0X00' : 'ADULT'
           });
         })
