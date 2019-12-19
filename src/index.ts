@@ -4,11 +4,21 @@ import Question from './question';
 import Request from './request';
 import { TicketParam, TrainParam } from './types';
 
+const request = new Request();
 const question = new Question();
+
+request
+  .post({ train_station_code: 'XUG' })
+  .then(res => {
+    console.log(res);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
 question
   .station()
   .then((res: TicketParam) => {
-    const request = new Request();
     request
       .queryTicket(res)
       .then(data => {
