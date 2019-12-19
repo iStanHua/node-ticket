@@ -13,8 +13,11 @@ export default class Station {
    * @param  name  拼音
    */
   filter(name: string) {
+    if (!name) return this.list;
     return this.list.filter(
-      l => l.pinyin.indexOf(name) > -1 || l.short.indexOf(name) > -1
+      l =>
+        l.pinyin.toLowerCase().indexOf(name.toLowerCase()) > -1 ||
+        l.short.toLowerCase().indexOf(name.toLowerCase()) > -1
     );
   }
 }

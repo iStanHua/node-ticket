@@ -2,18 +2,32 @@ import fs from 'fs';
 
 import Question from './question';
 import Request from './request';
-import { TicketParam } from './types';
+import { TicketParam, TrainParam } from './types';
 
 const question = new Question();
 question
-  .prompt()
+  .station()
   .then((res: TicketParam) => {
-    console.log(res);
     const request = new Request();
     request
-      .get(res)
+      .queryTicket(res)
       .then(data => {
-        console.log(data);
+        fs.writeFileSync(`./${res.train_date}.json`, JSON.stringify(data));
+        question
+          .train(res.train_date)
+          .then((t: TrainParam) => {
+            request
+              .queryByTrainNo(t)
+              .then(l => {
+                console.log(l);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
         console.log(err);
